@@ -1,22 +1,20 @@
 from setuptools import setup
 
 
-setup(name='mypackage',
-version='1.0.0',
-description='MLPro: Integration River',
+setup(name='mlpro-int-sb3',
+version='0.1.0',
+description='MLPro: Integration StableBaselines3',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
 license='Apache Software License (http://www.apache.org/licenses/LICENSE-2.0)',
-packages=['mypackage'],
+packages=['mlpro_int_sb3'],
 
 # Package dependencies for full installation
 extras_require={
     "full": [
-        "dill",
-        "numpy",
-        "matplotlib",
-        "multiprocess",
-        "mlpro"
+        "mlpro[full]>=1.3.1",
+        "stable_baselines3[extra]>=2.1.0"
+        "gymnasium>=0.29"
     ],
 },
 
