@@ -13,6 +13,7 @@ packages=['mlpro_int_sb3'],
 extras_require={
     "full": [
         "mlpro[full]>=1.3.1",
+        "mlpro_int_gymnasium[full]>=1.0.0",
         "stable_baselines3[extra]>=2.1.0"
         "gymnasium>=0.29"
     ],
