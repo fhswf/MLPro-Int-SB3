@@ -1,7 +1,7 @@
 ## -------------------------------------------------------------------------------------------------
-## -- Project : MLPro - A Synoptic Framework for Standardized Machine Learning Tasks
-## -- Package : mlpro.rl.examples
-## -- Module  : howto_rl_agent_001_train_and_reload_single_agent_gym.py
+## -- Project : MLPro - The integrative middleware framework for standardized machine learning
+## -- Package : mlpro_int_sb3
+## -- Module  : howto_rl_agent_011_train_and_reload_single_agent_gym.py
 ## -------------------------------------------------------------------------------------------------
 ## -- History :
 ## -- yyyy-mm-dd  Ver.      Auth.    Description
@@ -23,7 +23,7 @@
 ## -- 2023-03-04  1.3.0     DA       Renamed
 ## -- 2023-03-27  1.3.1     DA       Refactoring
 ## -- 2023-04-19  1.3.2     MRD      Refactor module import gym to gymnasium
-## -- 2024-02-16  1.3.3     SY       Wrapper Relocation from MLPro to MLPro-Int-Gymnasium, -SB3
+## -- 2024-02-16  1.3.3     SY       Relocation from MLPro to MLPro-Int-SB3
 ## -------------------------------------------------------------------------------------------------
 
 """
