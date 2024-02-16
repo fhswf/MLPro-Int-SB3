@@ -71,7 +71,7 @@ policy_kwargs = dict(activation_fn=torch.nn.Tanh,
 
 # 2 Implement your own RL scenario
 class MyScenario(RLScenario):
-    C_NAME = 'Howto-RL-WP-005'
+    C_NAME = 'Howto-RL-WP-002'
 
     def _setup(self, p_mode, p_ada: bool, p_visualize: bool, p_logging) -> Model:
         class CustomWrapperFixedSeed(WrEnvGYM2MLPro):

@@ -1,7 +1,7 @@
 ## -------------------------------------------------------------------------------------------------
 ## -- Project : MLPro - The integrative middleware framework for standardized machine learning
 ## -- Package : mlpro_int_sb3
-## -- Module  : howto_rl_wp_006_validation_wrapped_sb3_off_policy.py
+## -- Module  : howto_rl_wp_003_validation_wrapped_sb3_off_policy.py
 ## -------------------------------------------------------------------------------------------------
 ## -- History :
 ## -- yyyy-mm-dd  Ver.      Auth.    Description
@@ -64,7 +64,7 @@ policy_kwargs = dict(activation_fn=torch.nn.ReLU,
 
 # 2 Implement your own RL scenario
 class MyScenario(RLScenario):
-    C_NAME = 'Howto-RL-WP-006'
+    C_NAME = 'Howto-RL-WP-003'
 
     def _setup(self, p_mode, p_ada: bool, p_visualize: bool, p_logging) -> Model:
         class CustomWrapperFixedSeed(WrEnvGYM2MLPro):
