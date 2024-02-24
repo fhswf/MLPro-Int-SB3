@@ -18,11 +18,11 @@
 ## -- 2023-03-27  1.3.0     DA       Refactoring
 ## -- 2023-04-19  1.3.1     MRD      Refactor module import gym to gymnasium
 ## -- 2024-01-05  1.3.2     DA       Batch size set to 200
-## -- 2024-02-16  1.3.3     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-02-24  1.3.3     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.3.3 (2024-02-16)
+Ver. 1.3.3 (2024-02-24)
 
 This module shows comparison between native and wrapped SB3 policy (Off-policy).
 """
@@ -269,21 +269,22 @@ policy_sb3 = DQN(
 
 cus_callback = CustomCallback(p_logging=logging)
 policy_sb3.learn(total_timesteps=1200, callback=cus_callback)
-native_plot = cus_callback.plots
 
 
 # 9 Difference Plot
-native_ydata = native_plot[1][0].lines[0].get_ydata()
-wrapper_ydata = wrapper_plot[1][0].lines[0].get_ydata()
-smoothed_native = pd.Series.rolling(pd.Series(native_ydata), mva_window).mean()
-smoothed_native = [elem for elem in smoothed_native]
-smoothed_wrapper = pd.Series.rolling(pd.Series(wrapper_ydata), mva_window).mean()
-smoothed_wrapper = [elem for elem in smoothed_wrapper]
-plt.plot(smoothed_native, label="Native")
-plt.plot(smoothed_wrapper, label="Wrapper")
-plt.xlabel("Episode")
-plt.ylabel("Reward")
-plt.legend()
-
 if __name__ == "__main__":
+    native_plot = cus_callback.plots
+
+    native_ydata = native_plot[1][0].lines[0].get_ydata()
+    wrapper_ydata = wrapper_plot[1][0].lines[0].get_ydata()
+    smoothed_native = pd.Series.rolling(pd.Series(native_ydata), mva_window).mean()
+    smoothed_native = [elem for elem in smoothed_native]
+    smoothed_wrapper = pd.Series.rolling(pd.Series(wrapper_ydata), mva_window).mean()
+    smoothed_wrapper = [elem for elem in smoothed_wrapper]
+    plt.plot(smoothed_native, label="Native")
+    plt.plot(smoothed_wrapper, label="Wrapper")
+    plt.xlabel("Episode")
+    plt.ylabel("Reward")
+    plt.legend()
+
     plt.show()
