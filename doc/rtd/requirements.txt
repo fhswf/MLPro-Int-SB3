@@ -1,7 +1,6 @@
 mlpro[full]
 mlpro_int_gymnasium[full]>=0.1.0
 stable_baselines3>=2.1.0
-gymnasium>=0.29
 
 sphinxcontrib-napoleon
 sphinx-copybutton

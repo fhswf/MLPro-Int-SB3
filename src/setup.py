@@ -15,7 +15,6 @@ extras_require={
         "mlpro[full]>=1.3.1",
         "mlpro_int_gymnasium[full]>=0.1.0",
         "stable_baselines3>=2.1.0"
-        "gymnasium>=0.29"
     ],
 },
 
