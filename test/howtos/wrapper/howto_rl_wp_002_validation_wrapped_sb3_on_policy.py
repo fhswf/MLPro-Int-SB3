@@ -195,9 +195,10 @@ data_printing = {"Cycle": [False],
                  training.get_scenario().get_model().get_name(): [True, -1]}
 
 mem = training.get_results().ds_rewards
-mem_plot = MyDataPlotting(mem, p_showing=False, p_printing=data_printing)
-mem_plot.get_plots()
-wrapper_plot = mem_plot.plots
+if __name__ == "__main__":
+    mem_plot = MyDataPlotting(mem, p_showing=False, p_printing=data_printing)
+    mem_plot.get_plots()
+    wrapper_plot = mem_plot.plots
 
 
 # 7 Create Callback for the SB3 Training
