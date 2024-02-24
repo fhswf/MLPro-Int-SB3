@@ -3,43 +3,62 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Project Title
-=============
+MLPro-Int-SB3 - Integration of Stable-Baselines3 into MLPro 
+==============================================================
 
-Welcome to ...
+Welcome to MLPro-Int-SB3, an extension to MLPro to integrate the Stable-Baselines3 package.
+MLPro is a middleware framework for standardized machine learning in Python. It is 
+developed by the South Westphalia University of Applied Sciences, Germany, and provides 
+standards, templates, and processes for hybrid machine learning applications. Stable-Baselines3, in 
+turn, provides a diverse suite of reliable implementations of reinforcement learning algorithms in PyTorch.
 
-
-
-.. toctree::
-   :maxdepth: 3
-   :caption: Welcome to ...
-   :glob:
-   :numbered:
-
-   content/01_welcome/sub/*
+MLPro-Int-SB3 offers wrapper classes that allow the reuse of environments from Stable-Baselines3 in MLPro,
+or the other way around.
 
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Custom Part 1
-   :glob:
-   :numbered:
+**Preparation**
+   Before running the examples, please install the latest versions of MLPro, Stable-Baselines3, and MLPro-Int-SB3 as follows:
 
-   content/02_custom_part/custom_section1/main   
+   .. code-block:: bash
+
+      pip install mlpro-int-sb3[full] --upgrade
 
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Custom Part 2
-   :glob:
-   :numbered:
-
-   content/03_custom_part/custom_section2/main   
+**See also**
+   - `MLPro - Machine Learning Professional <https://mlpro.readthedocs.io>`_ 
+   - `MLPro-RL - Sub-framework for reinforcement learning <https://mlpro.readthedocs.io/en/latest/content/03_machine_learning/mlpro_rl/main.html>`_
+   - `Stable-Baselines3 - Reliable Reinforcement Learning Implementations <https://stable-baselines3.readthedocs.io/en/master/>`_ 
+   - `Further MLPro extensions <https://mlpro.readthedocs.io/en/latest/content/04_extensions/main.html>`_
+   - `MLPro-Int-SB3 on GitHub <https://github.com/fhswf/MLPro-Int-SB3>`_
 
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Appendices
+   :hidden:
+   :maxdepth: 2
+   :caption: Home
+
+   self
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Example Pool
    :glob:
 
-   content/04_appendices/appendix1/main
+   content/01_example_pool/*
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+   :glob:
+
+   content/02_api/*
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: About
+   :glob:
+
+   content/03_about/*

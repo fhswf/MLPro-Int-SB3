@@ -1,0 +1,32 @@
+.. _Howto Agent RL 021:
+Howto RL-AGENT-021: Train and Reload Single Agent Cartpole Discrete (MuJoCo)
+======================================================================
+
+
+**Executable code**
+
+.. literalinclude:: ../../../../../test/howtos/agent/howto_rl_agent_021_train_and_reload_single_agent_mujoco_cartpole_discrete.py
+	:language: python
+
+
+
+**Results**
+
+The MuJoCo Cartpole environment window appears. Afterwards, the training runs 
+for a few episodes before terminating and printing the result. 
+    
+After termination the local result folders contain the training result files:
+    - agent_actions.csv
+    - env_rewards.csv
+    - env_states.csv
+    - evaluation.csv
+    - summary.csv
+    - trained model.pkl
+
+Both training results are from the same agent.
+
+
+
+**Cross Reference**
+
+    - :ref:`API Reference <api_basics>`
