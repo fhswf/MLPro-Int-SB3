@@ -139,41 +139,42 @@ training.run()
 
 
 # 5 Create Plotting Class
-class MyDataPlotting(DataPlotting):
-    def get_plots(self):
-        """
-        A function to plot data
-        """
-        for name in self.data.names:
-            maxval = 0
-            minval = 0
-            if self.printing[name][0]:
-                fig = plt.figure(figsize=(7, 7))
-                raw = []
-                label = []
-                ax = fig.subplots(1, 1)
-                ax.set_title(name)
-                ax.grid(True, which="both", axis="both")
-                for fr_id in self.data.frame_id[name]:
-                    raw.append(np.sum(self.data.get_values(name, fr_id)))
-                    if self.printing[name][1] == -1:
-                        maxval = max(raw)
-                        minval = min(raw)
-                    else:
-                        maxval = self.printing[name][2]
-                        minval = self.printing[name][1]
+if __name__ == "__main__":
+    class MyDataPlotting(DataPlotting):
+        def get_plots(self):
+            """
+            A function to plot data
+            """
+            for name in self.data.names:
+                maxval = 0
+                minval = 0
+                if self.printing[name][0]:
+                    fig = plt.figure(figsize=(7, 7))
+                    raw = []
+                    label = []
+                    ax = fig.subplots(1, 1)
+                    ax.set_title(name)
+                    ax.grid(True, which="both", axis="both")
+                    for fr_id in self.data.frame_id[name]:
+                        raw.append(np.sum(self.data.get_values(name, fr_id)))
+                        if self.printing[name][1] == -1:
+                            maxval = max(raw)
+                            minval = min(raw)
+                        else:
+                            maxval = self.printing[name][2]
+                            minval = self.printing[name][1]
 
-                    label.append("%s" % fr_id)
-                ax.plot(raw)
-                ax.set_ylim(minval - (abs(minval) * 0.1), maxval + (maxval * 0.1))
-                ax.set_xlabel("Episode")
-                ax.legend(label, bbox_to_anchor=(1, 0.5), loc="center left")
-                self.plots[0].append(name)
-                self.plots[1].append(ax)
-                if self.showing:
-                    plt.show()
-                else:
-                    plt.close(fig)
+                        label.append("%s" % fr_id)
+                    ax.plot(raw)
+                    ax.set_ylim(minval - (abs(minval) * 0.1), maxval + (maxval * 0.1))
+                    ax.set_xlabel("Episode")
+                    ax.legend(label, bbox_to_anchor=(1, 0.5), loc="center left")
+                    self.plots[0].append(name)
+                    self.plots[1].append(ax)
+                    if self.showing:
+                        plt.show()
+                    else:
+                        plt.close(fig)
 
 
 # 6 Plotting 1 MLpro
@@ -184,9 +185,10 @@ data_printing = {"Cycle": [False],
                  training.get_scenario().get_model().get_name(): [True, -1]}
 
 mem = training.get_results().ds_rewards
-mem_plot = MyDataPlotting(mem, p_showing=False, p_printing=data_printing)
-mem_plot.get_plots()
-wrapper_plot = mem_plot.plots
+if __name__ == "__main__":
+    mem_plot = MyDataPlotting(mem, p_showing=False, p_printing=data_printing)
+    mem_plot.get_plots()
+    wrapper_plot = mem_plot.plots
 
 
 # 7 Create Callback for the SB3 Training
@@ -250,9 +252,10 @@ class CustomCallback(BaseCallback, Log):
                          "Second": [False],
                          "Microsecond": [False],
                          "Native": [True, -1]}
-        mem_plot = MyDataPlotting(self.ds_rewards, p_showing=False, p_printing=data_printing)
-        mem_plot.get_plots()
-        self.plots = mem_plot.plots
+        if __name__ == "__main__":
+            mem_plot = MyDataPlotting(self.ds_rewards, p_showing=False, p_printing=data_printing)
+            mem_plot.get_plots()
+            self.plots = mem_plot.plots
 
 
 # 8 Run the SB3 Training Native
