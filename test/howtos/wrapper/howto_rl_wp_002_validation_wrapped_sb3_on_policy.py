@@ -44,7 +44,7 @@ from mlpro.rl import *
 from mlpro_int_gymnasium.wrappers import WrEnvGYM2MLPro
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
 from pathlib import Path
-
+import matplotlib
 
 
 # 1 Parameter
@@ -159,12 +159,7 @@ class MyDataPlotting(DataPlotting):
             maxval = 0
             minval = 0
             if self.printing[name][0]:
-
                 fig = plt.figure(figsize=(7, 7))
-                backend = matplotlib.get_backend()
-                if backend == 'TkAgg':
-                    fig.canvas.manager.window.attributes('-topmost', True)  
-
                 raw = []
                 label = []
                 ax = fig.subplots(1, 1)
