@@ -159,6 +159,7 @@ class MyDataPlotting(DataPlotting):
             maxval = 0
             minval = 0
             if self.printing[name][0]:
+                matplotlib.use('TkAgg')
                 fig = plt.figure(figsize=(7, 7))
                 raw = []
                 label = []
