@@ -159,7 +159,12 @@ class MyDataPlotting(DataPlotting):
             maxval = 0
             minval = 0
             if self.printing[name][0]:
+
                 fig = plt.figure(figsize=(7, 7))
+                backend = matplotlib.get_backend()
+                if backend == 'TkAgg':
+                    fig.canvas.manager.window.attributes('-topmost', True)  
+
                 raw = []
                 label = []
                 ax = fig.subplots(1, 1)
