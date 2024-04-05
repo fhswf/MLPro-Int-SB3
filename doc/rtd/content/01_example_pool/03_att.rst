@@ -1,5 +1,5 @@
 .. _howtos_att
-Attributes
+Advanced Training Techniques
 ===========================
 
 .. toctree::
