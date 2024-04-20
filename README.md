@@ -5,8 +5,8 @@
 [![Anaconda-Version Badge](https://anaconda.org/mlpro-int-sb3/mlpro-int-sb3/badges/version.svg)](https://anaconda.org/mlpro-int-sb3/mlpro)
 [![Anaconda-Downloads Badge](https://img.shields.io/conda/dn/mlpro-int-sb3/mlpro-int-sb3?color=green&label=Anaconda.org%20Total%20downloads&style=flat-square)](https://anaconda.org/mlpro-int-pettingzoo/mlpro-int-pettingzoo)
 --->
-[![PyPI Total Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-sb3?period=total&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Total%20Downloads)](https://pepy.tech/project/mlpro-int-pettingzoo)
-[![PyPI Last Month Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-sb3?period=month&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Last%20Month%20Downloads)](https://pepy.tech/project/mlpro-int-pettingzoo)
+[![PyPI Total Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-sb3?period=total&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Total%20Downloads)](https://pepy.tech/project/mlpro-int-sb3)
+[![PyPI Last Month Downloads](https://static.pepy.tech/personalized-badge/mlpro-int-sb3?period=month&units=international_system&left_color=blue&right_color=orange&left_text=PyPI%20Last%20Month%20Downloads)](https://pepy.tech/project/mlpro-int-sb3)
 
 
 <img src="https://github.com/fhswf/MLPro-Int-SB3/blob/main/doc/logo/original/logo.png?raw=True" align="right" width="40%"/>

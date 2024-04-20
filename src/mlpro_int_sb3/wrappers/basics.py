@@ -29,10 +29,11 @@
 ## -- 2023-04-19  1.2.7     MRD      Refactor module import gym to gymnasium
 ## -- 2023-09-25  1.2.8     DA       Set minimum version for sb3 to 2.1.0
 ## -- 2024-02-16  1.3.0     SY       Wrapper Relocation from MLPro to MLPro-Int-PettingZoo
+## -- 2024-04-19  1.4.0     DA       Alignment with MLPro 1.4.0
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.3.0 (2024-02-16)
+Ver. 1.4.0 (2024-04-19)
 
 This module provides wrapper classes for integrating stable baselines3 policy algorithms.
 
@@ -46,7 +47,7 @@ import torch
 import numpy as np
 from stable_baselines3.common import utils
 from stable_baselines3.common.on_policy_algorithm import OnPolicyAlgorithm
-from mlpro.wrappers.models import Wrapper
+from mlpro.wrappers import Wrapper
 from stable_baselines3.common.vec_env.base_vec_env import VecEnv, VecEnvStepReturn, VecEnvWrapper
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3 import HerReplayBuffer

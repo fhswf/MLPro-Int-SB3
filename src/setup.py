@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='mlpro-int-sb3',
-version='0.1.1',
+version='1.0.0',
 description='MLPro: Integration StableBaselines3',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
@@ -12,10 +12,8 @@ packages=['mlpro_int_sb3'],
 # Package dependencies for full installation
 extras_require={
     "full": [
-        "mlpro[full]>=1.3.1",
-        "mlpro_int_gymnasium>=0.1.0",
-        "stable_baselines3>=2.1.0",
-        "gymnasium>=0.29"
+        "mlpro_int_gymnasium[full]>=1.0.0",
+        "stable_baselines3>=2.1.0"
     ],
 },
 
