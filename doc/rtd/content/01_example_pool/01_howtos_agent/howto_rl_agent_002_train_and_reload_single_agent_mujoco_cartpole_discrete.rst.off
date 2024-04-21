@@ -1,11 +1,11 @@
-.. _Howto Agent RL 022:
-Howto RL-AGENT-022: Train and Reload Single Agent Cartpole Continuous (MuJoCo)
-======================================================================
+.. _Howto Agent RL 002:
+Howto RL-AGENT-021: Train and Reload Single Agent Cartpole Discrete (MuJoCo)
+============================================================================
 
 
 **Executable code**
 
-.. literalinclude:: ../../../../../test/howtos/agent/howto_rl_agent_022_train_and_reload_single_agent_mujoco_cartpole_continuous.py
+.. literalinclude:: ../../../../../test/howtos/agent/howto_rl_agent_002_train_and_reload_single_agent_mujoco_cartpole_discrete.py
 	:language: python
 
 

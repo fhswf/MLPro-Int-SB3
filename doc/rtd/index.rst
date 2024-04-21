@@ -17,11 +17,12 @@ or the other way around.
 
 
 **Preparation**
-   Before running the examples, please install the latest versions of MLPro, Stable-Baselines3, and MLPro-Int-SB3 as follows:
 
-   .. code-block:: bash
+Before running the examples, please install the latest versions of MLPro, Stable-Baselines3, and MLPro-Int-SB3 as follows:
 
-      pip install mlpro-int-sb3[full] --upgrade
+.. code-block:: bash
+
+   pip install mlpro-int-sb3[full] --upgrade
 
 
 **See also**

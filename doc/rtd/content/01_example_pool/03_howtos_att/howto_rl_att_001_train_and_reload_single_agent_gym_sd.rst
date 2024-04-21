@@ -1,6 +1,15 @@
 .. _Howto RL ATT 001:
-Howto RL-ATT-001: Train and Reload Single Agent using Stagnation Detection (Gym)
-======================================================================
+Howto RL-ATT-001: Train and Reload Single Agent using Stagnation Detection (Gymnasium)
+======================================================================================
+
+
+**Prerequisites**
+
+Please install Gymnasium and the related integration package as follows:
+
+.. code-block:: bash
+
+    pip install mlpro-int-gymnasium[full] --upgrade
 
 
 **Executable code**

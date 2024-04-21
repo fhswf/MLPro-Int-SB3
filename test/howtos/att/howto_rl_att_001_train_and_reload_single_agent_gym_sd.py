@@ -9,26 +9,37 @@
 ## -- 2023-03-27  1.0.1     DA       Refactoring
 ## -- 2023-04-19  1.0.2     MRD      Refactor module import gym to gymnasium
 ## -- 2024-02-16  1.0.3     SY       Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-04-21  1.1.0     DA       Review/refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.0.3 (2024-02-16)
+Ver. 1.1.0 (2024-04-21)
 
-As in Howto RL AGENT 011, this module shows how to train a single agent and load it again to do some
-extra cycles. In opposite to howto 011, stagnation detection is used to automatically end the
-training if no further progress can be made.
+This module demonstates the integration of Stable Baselines3 and Gymnasium into MLPro. In particular,
+an RL agent based on the PPO policy algorithm is trained on Gymnasium's environment 'CartPole-v1'. It
+will take around 15,000 training cycles to get a proper result. After the training, the entire RL
+scenario including the environment and trained agent is stored in the local user home directory and
+reloaded again to run further cycles.
+
+Detailed training statistics and the trained agent is stored in your local home directory.
+
+In opposite to howto_rl_agent_001_train_and_reload_single_agent_gym.py, the automatic training
+stagnation detection is applied. 
 
 You will learn:
 
-1. How to use the RLScenario class of MLPro.
+1. How to setup your own Reinforcement Learning scenario in MLPro.
 
-2. How to save a scenario after some run.
+2. How to reuse Stable Baselines3 and Gymnasium in your own application.
 
-3. How to reload the saved scenario and re-run for additional cycles.
+3. How to train an agent on an environment.
 
-4. How to use stagnation detection to end the training automatically if there is no progress.
+4. How to apply MLPro's training stagnation detection.
+
+5. How to reload the saved scenario and re-run for additional cycles.
 
 """
+
 
 
 import gymnasium as gym
@@ -50,7 +61,11 @@ class MyScenario (RLScenario):
             gym_env     = gym.make('CartPole-v1', render_mode="human")
         else:
             gym_env     = gym.make('CartPole-v1')
-        self._env = WrEnvGYM2MLPro(gym_env, p_visualize=p_visualize, p_logging=p_logging)
+
+        self._env = WrEnvGYM2MLPro( p_gym_env=gym_env, 
+                                    p_seed=3,
+                                    p_visualize=p_visualize, 
+                                    p_logging=p_logging )
 
         # 1.2 Setup Policy From SB3
         policy_sb3 = PPO(
@@ -85,25 +100,27 @@ class MyScenario (RLScenario):
 
 if __name__ == '__main__':
     # Parameters for demo mode
-    cycle_limit = 20000
-    adaptation_limit = 0
-    stagnation_limit = 5
-    eval_frequency = 10
-    eval_grp_size = 5
-    logging = Log.C_LOG_WE
-    visualize = True
-    path = str(Path.home())
+    cycle_limit         = 20000
+    cycle_limit2        = 500 
+    adaptation_limit    = 0
+    stagnation_limit    = 5
+    eval_frequency      = 10
+    eval_grp_size       = 5
+    logging             = Log.C_LOG_WE
+    visualize           = True
+    path                = str(Path.home())
 
 else:
     # Parameters for internal unit test
-    cycle_limit = 50
-    adaptation_limit = 5
-    stagnation_limit = 5
-    eval_frequency = 2
-    eval_grp_size = 1
-    logging = Log.C_LOG_NOTHING
-    visualize = False
-    path = str(Path.home())
+    cycle_limit         = 50
+    cycle_limit2        = 50 
+    adaptation_limit    = 5
+    stagnation_limit    = 5
+    eval_frequency      = 2
+    eval_grp_size       = 1
+    logging             = Log.C_LOG_NOTHING
+    visualize           = False
+    path                = str(Path.home())
 
 
 # 2 Create scenario and start training
@@ -119,11 +136,9 @@ training = RLTraining(
     p_logging=logging )
 
 
-
 # 3 Training
 training.run()
 filename_scenario = training.get_scenario().get_filename()
-
 
 
 # 4 Reload the scenario
@@ -139,6 +154,7 @@ scenario.reset()
 
 
 # 6 Run Scenario
+scenario.set_cycle_limit(cycle_limit2)
 scenario.run()
 
 if __name__ != '__main__':

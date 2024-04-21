@@ -1,2 +1,2 @@
-mlpro_int_gymnasium[full]>=1.0.0
-stable_baselines3>=2.1.0
+mlpro_int_gymnasium[full]>=1.0.1
+stable_baselines3>=2.3.0

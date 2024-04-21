@@ -153,7 +153,7 @@ class WrPolicySB32MLPro (Wrapper, Policy):
 
     C_TYPE              = 'Wrapper SB3 -> MLPro'
     C_WRAPPED_PACKAGE   = 'stable_baselines3'
-    C_MINIMUM_VERSION   = '2.1.0'
+    C_MINIMUM_VERSION   = '2.3.0'
 
 ## -------------------------------------------------------------------------------------------------
     def __init__(self, p_sb3_policy, p_cycle_limit, p_observation_space:MSpace,
