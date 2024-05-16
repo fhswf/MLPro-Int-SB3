@@ -1,20 +1,25 @@
 ## -------------------------------------------------------------------------------------------------
 ## -- Project : MLPro - The integrative middleware framework for standardized machine learning
 ## -- Package : mlpro_int_sb3
-## -- Module  : howto_rl_agent_003_train_and_reload_single_agent_mujoco_cartpole_continuous.py
+## -- Module  : howto_rl_agent_002_train_and_reload_single_agent_mujoco_cartpole_discrete.py
 ## -------------------------------------------------------------------------------------------------
 ## -- History :
 ## -- yyyy-mm-dd  Ver.      Auth.    Description
-## -- 2023-03-07  0.0.0     MRD      Creation
-## -- 2023-03-07  1.0.0     MRD      Released first version
-## -- 2023-03-27  1.0.1     DA       Refactoring
-## -- 2024-02-16  1.0.2     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
+## -- 2023-02-23  0.0.0     MRD      Creation
+## -- 2023-02-23  1.0.0     MRD      Released first version
+## -- 2023-02-23  1.0.1     MRD      Refactor
+## -- 2023-03-02  1.0.2     LSB      Refactoring
+## -- 2023-03-04  1.1.0     DA       Renamed
+## -- 2023-03-07  1.1.1     MRD      Renamed
+## -- 2023-03-27  1.1.2     DA       Refactoring
+## -- 2024-02-16  1.1.3     SY       Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-05-16  1.1.4     SY       Migration of Wrapper MuJoCo from MLPro to MLPro-Int-MuJoCo
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.0.2 (2024-02-16)
+Ver. 1.1.4 (2024-05-16)
 
-This module shows how to train a single agent with SB3 Policy on Cartpole Continuous MuJoCo Environment.
+This module shows how to train a single agent with SB3 Policy on Cartpole Discrete MuJoCo Environment.
 
 You will learn:
 
@@ -32,7 +37,7 @@ You will learn:
 from stable_baselines3 import PPO
 from mlpro.rl import *
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
-from mlpro.rl.pool.envs.cartpole import CartpoleMujocoContinuous
+from mlpro_int_mujoco.envs.cartpole import CartpoleMujocoDiscrete
 from pathlib import Path
 
 
@@ -41,7 +46,7 @@ class MyScenario(RLScenario):
 
     def _setup(self, p_mode, p_ada: bool, p_visualize: bool, p_logging) -> Model:
         # 1.1 Setup environment
-        self._env = CartpoleMujocoContinuous(p_logging=logging, p_visualize=visualize)
+        self._env = CartpoleMujocoDiscrete(p_logging=logging, p_visualize=visualize)
 
         # 1.2 Setup Policy From SB3
         policy_sb3 = PPO(policy="MlpPolicy", n_steps=10, env=None, _init_setup_model=False, device="cpu", seed=1)
@@ -66,7 +71,7 @@ class MyScenario(RLScenario):
 # 3 Create scenario and run some cycles
 if __name__ == "__main__":
     # Parameters for demo mode
-    cycle_limit = 10000
+    cycle_limit = 1 #0000
     adaptation_limit = 0
     stagnation_limit = 0
     eval_frequency = 0
@@ -104,7 +109,6 @@ training = RLTraining(
 # 3 Training
 training.run()
 filename_scenario = training.get_scenario().get_filename()
-
 
 # 4 Reload the scenario
 if __name__ == '__main__':

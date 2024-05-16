@@ -8,10 +8,11 @@
 ## -- 2023-03-07  1.0.0     MRD      Creation as derivate of howto_rl_agent_022 
 ## -- 2023-03-27  1.0.1     DA       Refactoring
 ## -- 2024-02-16  1.0.2     SY       Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-05-16  1.0.3     SY       Migration of Wrapper MuJoCo from MLPro to MLPro-Int-MuJoCo
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.0.2 (2024-02-16)
+Ver. 1.0.3 (2024-05-16)
 
 As in Howto RL AGENT 022, this module shows how to train a single agent with SB3 Policy on Continuous 
 Cartpole MuJoCo Environment. In opposite to howto 022, stagnation detection is used to automatically 
@@ -33,7 +34,7 @@ You will learn:
 from stable_baselines3 import PPO
 from mlpro.rl import *
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
-from mlpro.rl.pool.envs.cartpole import CartpoleMujocoContinuous
+from mlpro_int_mujoco.envs.cartpole import CartpoleMujocoContinuous
 from pathlib import Path
 
 
