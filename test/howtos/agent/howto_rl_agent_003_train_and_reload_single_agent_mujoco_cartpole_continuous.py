@@ -9,10 +9,11 @@
 ## -- 2023-03-07  1.0.0     MRD      Released first version
 ## -- 2023-03-27  1.0.1     DA       Refactoring
 ## -- 2024-02-16  1.0.2     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-05-16  1.0.3     SY       Migration of Wrapper MuJoCo from MLPro to MLPro-Int-MuJoCo
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.0.2 (2024-02-16)
+Ver. 1.0.3 (2024-05-16)
 
 This module shows how to train a single agent with SB3 Policy on Cartpole Continuous MuJoCo Environment.
 
