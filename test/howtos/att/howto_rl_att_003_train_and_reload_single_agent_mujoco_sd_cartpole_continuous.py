@@ -34,7 +34,7 @@ You will learn:
 from stable_baselines3 import PPO
 from mlpro.rl import *
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
-from mlpro.rl.pool.envs.cartpole import CartpoleMujocoContinuous
+from mlpro_int_mujoco.envs.cartpole import CartpoleMujocoContinuous
 from pathlib import Path
 
 
