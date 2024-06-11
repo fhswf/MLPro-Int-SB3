@@ -24,7 +24,7 @@
 ## -- 2023-03-27  1.3.0     DA       Refactoring
 ## -- 2023-04-19  1.3.1     MRD      Refactor module import gym to gymnasium
 ## -- 2024-02-24  1.3.2     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
-## -- 2024-06-11  1.3.3     SY       Refactoring
+## -- 2024-06-11  1.3.3     SY       Fixing how-to due to behaviour change between gymnasium and SB3
 ## -------------------------------------------------------------------------------------------------
 
 """
