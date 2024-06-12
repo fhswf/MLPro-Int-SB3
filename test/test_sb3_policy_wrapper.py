@@ -19,10 +19,11 @@
 ## -- 2023-04-19  2.0.6     MRD      Refactor module import gym to gymnasium
 ## -- 2023-04-23  2.0.7     MRD      Temp commented testing
 ## -- 2023-08-21  2.0.8     MRD      Refactor for new gymnasium and sb3 wrapper, remove A2C test temp
+## -- 2024-06-12  2.0.9     SY       Minor refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 2.0.8 (2023-08-21)
+Ver. 2.0.9 (2024-06-12)
 
 Unit test classes for environment.
 """
@@ -68,7 +69,7 @@ def test_sb3_policy_wrapper(env_cls):
 
                     # 1 Reset Gym environment and determine initial state
                     if not self.reseted:
-                        observation, _ = self._gym_env.reset(seed=self._p_seed)
+                        observation, _ = self._gym_env.reset(seed=self._seed)
                         self.reseted = True
                     else:
                         observation, _ = self._gym_env.reset()

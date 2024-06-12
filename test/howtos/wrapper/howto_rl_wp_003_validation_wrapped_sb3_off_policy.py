@@ -19,10 +19,11 @@
 ## -- 2023-04-19  1.3.1     MRD      Refactor module import gym to gymnasium
 ## -- 2024-01-05  1.3.2     DA       Batch size set to 200
 ## -- 2024-02-24  1.3.3     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
+## -- 2024-06-12  1.3.4     SY       Fixing how-to due to behaviour change between gymnasium and SB3
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.3.3 (2024-02-24)
+Ver. 1.3.4 (2024-06-12)
 
 This module shows comparison between native and wrapped SB3 policy (Off-policy).
 """
@@ -38,6 +39,7 @@ from mlpro.rl import *
 from mlpro_int_gymnasium.wrappers import WrEnvGYM2MLPro
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 
 
@@ -73,7 +75,9 @@ class MyScenario(RLScenario):
                 self._num_cycles = 0
 
                 # 1 Reset Gym environment and determine initial state
-                observation, _ = self._gym_env.reset()
+                if p_seed != 0:
+                    p_seed = None
+                observation, _ = self._gym_env.reset(seed=p_seed)
                 obs = DataObject(observation)
 
                 # 2 Create state object from Gym observation
@@ -86,7 +90,7 @@ class MyScenario(RLScenario):
             gym_env     = gym.make('CartPole-v1', render_mode="human")
         else:
             gym_env     = gym.make('CartPole-v1')
-        self._env = CustomWrapperFixedSeed(gym_env, p_seed=2, p_logging=p_logging)
+        self._env = CustomWrapperFixedSeed(gym_env, p_logging=p_logging)
 
         # 2 Instatiate Policy From SB3
         # DQN
@@ -94,11 +98,12 @@ class MyScenario(RLScenario):
             policy="MlpPolicy",
             learning_starts=12,
             buffer_size=24,
+            batch_size=200,
             env=None,
             _init_setup_model=False,
             policy_kwargs=policy_kwargs,
             device="cpu",
-            seed=2)
+            seed=0)
 
         # 3 Wrap the policy
         self.policy_wrapped = WrPolicySB32MLPro(
@@ -205,14 +210,23 @@ class CustomCallback(BaseCallback, Log):
     def __init__(self, p_verbose=0, p_logging=False):
         Log.__init__(self, p_logging=p_logging)
         super(CustomCallback, self).__init__(p_verbose)
+        
         reward_space = Set()
         reward_space.add_dim(Dimension("Native"))
         self.ds_rewards = RLDataStoring(reward_space)
+        
+        action_space = Set()
+        action_space.add_dim(Dimension("Native"))
+        self.ds_actions = RLDataStoring(action_space)
+        
+        states_space = Set()
+        states_space.add_dim(Dimension("Native"))
+        self.ds_states = RLDataStoring(states_space)
+        
         self.episode_num = 0
         self.total_cycle = 0
         self.cycles = 0
         self.plots = None
-        self.new_episodes = False
         Log.__init__(self, p_logging=p_logging)
 
         self.continue_training = True
@@ -222,26 +236,32 @@ class CustomCallback(BaseCallback, Log):
         self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR)
         self.log(self.C_LOG_TYPE_I, '-- Episode', self.episode_num, 'started...')
         self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR, '\n')
+        
         self.ds_rewards.add_episode(self.episode_num)
+        self.ds_actions.add_episode(self.episode_num)
+        self.ds_states.add_episode(self.episode_num)
 
     def _on_step(self) -> bool:
-        if self.new_episodes:
+        
+        if self.locals.get("done"):
             self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR)
             self.log(self.C_LOG_TYPE_I, '-- Episode', self.episode_num, 'finished after', self.total_cycle, 'cycles')
             self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR, '\n\n')
             self.episode_num += 1
             self.total_cycle = 0
             self.ds_rewards.add_episode(self.episode_num)
+            self.ds_actions.add_episode(self.episode_num)
+            self.ds_states.add_episode(self.episode_num)
             self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR)
             self.log(self.C_LOG_TYPE_I, '-- Episode', self.episode_num, 'started...')
             self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR, '\n')
-            self.new_episodes = False
+            
         # With Cycle Limit
         self.ds_rewards.memorize_row(self.total_cycle, timedelta(0, 0, 0), self.locals.get("rewards"))
+        self.ds_actions.memorize_row(self.total_cycle, timedelta(0, 0, 0), self.locals.get("actions"))
+        self.ds_states.memorize_row(self.total_cycle, timedelta(0, 0, 0), self.locals.get("new_obs"))
         self.total_cycle += 1
         self.cycles += 1
-        if self.locals.get("done"):
-            self.new_episodes = True
 
         return True
 
@@ -268,10 +288,10 @@ policy_sb3 = DQN(
     env=gym_env,
     policy_kwargs=policy_kwargs,
     device="cpu",
-    seed=2)
+    seed=0)
 
 cus_callback = CustomCallback(p_logging=logging)
-policy_sb3.learn(total_timesteps=1200, callback=cus_callback)
+policy_sb3.learn(total_timesteps=cycle_limit, callback=cus_callback)
 
 
 # 9 Difference Plot
