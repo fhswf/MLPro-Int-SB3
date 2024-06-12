@@ -19,11 +19,11 @@
 ## -- 2023-04-19  1.3.1     MRD      Refactor module import gym to gymnasium
 ## -- 2024-01-05  1.3.2     DA       Batch size set to 200
 ## -- 2024-02-24  1.3.3     SY       Wrapper Relocation from MLPro to MLPro-Int-SB3
-## -- 2024-06-11  1.3.4     SY       Fixing how-to due to behaviour change between gymnasium and SB3
+## -- 2024-06-12  1.3.4     SY       Fixing how-to due to behaviour change between gymnasium and SB3
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.3.4 (2024-06-11)
+Ver. 1.3.4 (2024-06-12)
 
 This module shows comparison between native and wrapped SB3 policy (Off-policy).
 """
@@ -98,6 +98,7 @@ class MyScenario(RLScenario):
             policy="MlpPolicy",
             learning_starts=12,
             buffer_size=24,
+            batch_size=200,
             env=None,
             _init_setup_model=False,
             policy_kwargs=policy_kwargs,
@@ -241,6 +242,7 @@ class CustomCallback(BaseCallback, Log):
         self.ds_states.add_episode(self.episode_num)
 
     def _on_step(self) -> bool:
+        
         if self.locals.get("done"):
             self.log(self.C_LOG_TYPE_I, Training.C_LOG_SEPARATOR)
             self.log(self.C_LOG_TYPE_I, '-- Episode', self.episode_num, 'finished after', self.total_cycle, 'cycles')
