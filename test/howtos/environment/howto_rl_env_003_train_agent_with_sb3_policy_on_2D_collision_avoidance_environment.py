@@ -28,12 +28,11 @@ You will learn:
 """
 
 
-import torch
 from mlpro.bf.plot import DataPlotting
 from mlpro.rl import *
 from mlpro.rl.pool.envs.collisionavoidance_2D import DynamicTrajectoryPlanner
 from stable_baselines3 import PPO, DDPG, A2C
-from stable_baselines3.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise
+from stable_baselines3.common.noise import NormalActionNoise
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
 from mlpro_int_gymnasium.wrappers import WrEnvMLPro2GYM
 from pathlib import Path
