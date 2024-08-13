@@ -15,7 +15,8 @@ extras_require={
         "mlpro_int_gymnasium[full]>=1.0.2",
         "mlpro_int_mujoco[full]>=1.0.1",
         "stable_baselines3>=2.3.0",
-        "torch>=2.0.0,<=2.3.1"
+        "torch>=2.0.0,<=2.3.1",
+        "numpy>=1.0.0,<=1.26.4"
     ],
 },
 
