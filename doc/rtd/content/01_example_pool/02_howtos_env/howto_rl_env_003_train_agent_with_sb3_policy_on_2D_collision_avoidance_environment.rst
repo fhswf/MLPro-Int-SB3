@@ -5,7 +5,7 @@ Howto RL-ENV-003: SB3 Policy on 2D Collision Avoidance Environment
 
 **Executable code**
 
-.. literalinclude:: ../../../../../test/howtos/env/howto_rl_env_003_train_agent_with_sb3_policy_on_2D_collision_avoidance_environment.py
+.. literalinclude:: ../../../../../test/howtos/environment/howto_rl_env_003_train_agent_with_sb3_policy_on_2D_collision_avoidance_environment.py
 	:language: python
 
 

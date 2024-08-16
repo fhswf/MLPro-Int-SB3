@@ -5,7 +5,7 @@ Howto RL-ENV-001: SB3 Policy on RobotHTM Environment
 
 **Executable code**
 
-.. literalinclude:: ../../../../../test/howtos/env/howto_rl_env_001_train_agent_with_SB3_policy_on_robothtm_environment.py
+.. literalinclude:: ../../../../../test/howtos/environment/howto_rl_env_001_train_agent_with_SB3_policy_on_robothtm_environment.py
 	:language: python
 
 
