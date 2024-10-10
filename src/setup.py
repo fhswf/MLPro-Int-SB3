@@ -17,7 +17,8 @@ extras_require={
         "gymnasium!=1.0.0",
         "stable_baselines3>=2.3.0",
         "torch>=2.0.0,<=2.3.1",
-        "numpy>=1.0.0,<=1.26.4"
+        "numpy>=1.0.0,<=1.26.4",
+        "setuptools >= 75.0.0"
     ],
 },
 
