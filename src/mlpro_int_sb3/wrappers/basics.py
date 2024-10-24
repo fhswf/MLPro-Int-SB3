@@ -30,10 +30,11 @@
 ## -- 2023-09-25  1.2.8     DA       Set minimum version for sb3 to 2.1.0
 ## -- 2024-02-16  1.3.0     SY       Wrapper Relocation from MLPro to MLPro-Int-PettingZoo
 ## -- 2024-04-19  1.4.0     DA       Alignment with MLPro 1.4.0
+## -- 2024-10-24  1.4.1     SY       Update: _compute_action_on_policy() for Maskable PPO
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.4.0 (2024-04-19)
+Ver. 1.4.1 (2024-10-24)
 
 This module provides wrapper classes for integrating stable baselines3 policy algorithms.
 
@@ -54,7 +55,7 @@ from stable_baselines3 import HerReplayBuffer
 from collections import OrderedDict
 from mlpro.rl import *
 from typing import Any, Dict, Optional, Union
-
+from sb3_contrib import MaskablePPO
 
 
 
@@ -140,7 +141,7 @@ class WrPolicySB32MLPro (Wrapper, Policy):
     p_action_space : MSpace
         Environment Action Space
     p_ada : bool
-        Adaptability. Defaults to True.
+        Adaptability. Default = True.
     p_visualize : bool
         Boolean switch for visualisation. Default = False.
     p_logging
@@ -156,9 +157,16 @@ class WrPolicySB32MLPro (Wrapper, Policy):
     C_MINIMUM_VERSION   = '2.3.0'
 
 ## -------------------------------------------------------------------------------------------------
-    def __init__(self, p_sb3_policy, p_cycle_limit, p_observation_space:MSpace,
-                 p_action_space:MSpace, p_ada:bool=True, p_visualize:bool=False, 
-                 p_logging=Log.C_LOG_ALL, p_num_envs:int=1, p_desired_goals=None):
+    def __init__(self,
+                 p_sb3_policy,
+                 p_cycle_limit,
+                 p_observation_space:MSpace,
+                 p_action_space:MSpace,
+                 p_ada:bool=True,
+                 p_visualize:bool=False, 
+                 p_logging=Log.C_LOG_ALL,
+                 p_num_envs:int=1,
+                 p_desired_goals=None):
         # Set Name
         WrPolicySB32MLPro.C_NAME = "Policy " + type(p_sb3_policy).__name__
         
@@ -168,6 +176,12 @@ class WrPolicySB32MLPro (Wrapper, Policy):
         self.sb3 = p_sb3_policy
         self.last_buffer_element = None
         self.last_done = False
+
+        # Check masking
+        if isinstance(p_sb3_policy, MaskablePPO):
+            self._action_masking = True
+        else:
+            self._action_masking = False
 
         # Variable preparation for SB3
         action_space = None
@@ -279,6 +293,16 @@ class WrPolicySB32MLPro (Wrapper, Policy):
 
 
 ## -------------------------------------------------------------------------------------------------
+    def _get_mask(self) -> np.array:
+        raise NotImplementedError
+
+
+## -------------------------------------------------------------------------------------------------
+    def _add_to_mask(self, p_action:Action):
+        raise NotImplementedError
+
+
+## -------------------------------------------------------------------------------------------------
     def _compute_action_on_policy(self, p_obs: State) -> Action:
         obs = p_obs.get_values()
 
@@ -289,8 +313,17 @@ class WrPolicySB32MLPro (Wrapper, Policy):
                 else:
                     obs = torch.Tensor(obs).reshape(1, obs.size).to(self.sb3.device)
 
+            if self._action_masking:
+                if p_obs.get_kwargs() is not None:
+                    act_masks = p_obs.get_kwargs()
+                else:
+                    act_masks = self._get_mask()
+
             with torch.no_grad():
-                actions, values, log_probs = self.sb3.policy.forward(obs)
+                if not self._action_masking:
+                    actions, values, log_probs = self.sb3.policy.forward(obs)
+                else:
+                    actions, values, log_probs = self.sb3.policy.forward(obs, action_masks=act_masks)
 
             actions = actions.cpu().numpy()
 
@@ -306,6 +339,9 @@ class WrPolicySB32MLPro (Wrapper, Policy):
             # Action Buffer
             action_buffer = actions.flatten()
             action_buffer = Action(self._id, self._action_space, action_buffer)
+
+            if self._action_masking:
+                self._add_to_mask(action_buffer)
 
             # Add to additional_buffer_element
             self.additional_buffer_element = dict(action=action_buffer, value=values, action_log=log_probs)
