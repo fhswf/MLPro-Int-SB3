@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='mlpro-int-sb3',
-version='1.0.3',
+version='1.0.4',
 description='MLPro: Integration StableBaselines3',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
@@ -17,7 +17,7 @@ extras_require={
         "mlpro>=1.9.0",
         "stable_baselines3>=2.3.0",
         "sb3-contrib>=2.2.1",
-        "torch>=2.3.0",
+        "torch>=2.0.0,<=2.3.1",
         "numpy>=1.0.0,<=1.26.4",
         "setuptools >= 75.0.0"
     ],
