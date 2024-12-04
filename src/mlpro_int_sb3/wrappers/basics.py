@@ -481,20 +481,30 @@ class WrPolicySB32MLPro (Wrapper, Policy):
             data_next_obs['achieved_goal'] = np.array(datas["state_new"].get_values())
             data_next_obs['desired_goal'] = np.array(self.desired_goals)
             data_next_obs['observation'] = np.array(datas["state_new"].get_values())
+            
+            try:        
+                rewards = datas["reward"].get_overall_reward()
+            except:
+                rewards = datas["reward"].get_agent_reward(self._id)
 
             self.sb3.replay_buffer.add(
                 obs=data_obs,
                 next_obs=data_next_obs,
                 action=datas["action"].get_sorted_values(),
-                reward=datas["reward"].get_overall_reward(),
+                reward=rewards,
                 done=datas["state_new"].get_terminal(),
                 infos=[info])
         else:
+            try:        
+                rewards = datas["reward"].get_overall_reward()
+            except:
+                rewards = datas["reward"].get_agent_reward(self._id)
+                
             self.sb3.replay_buffer.add(
                 datas["state"].get_values(),
                 datas["state_new"].get_values(),
                 datas["action"].get_sorted_values(),
-                datas["reward"].get_overall_reward(),
+                rewards,
                 datas["state_new"].get_terminal(),
                 [info])
 
