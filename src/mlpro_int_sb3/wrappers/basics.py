@@ -31,10 +31,11 @@
 ## -- 2024-02-16  1.3.0     SY       Wrapper Relocation from MLPro to MLPro-Int-PettingZoo
 ## -- 2024-04-19  1.4.0     DA       Alignment with MLPro 1.4.0
 ## -- 2024-10-24  1.4.1     SY       Update: _compute_action_on_policy() for Maskable PPO
+## -- 2025-02-27  1.4.2     SY       Enabling MultiDiscrete in state and action spaces, refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.4.1 (2024-10-24)
+Ver. 1.4.2 (2025-02-27)
 
 This module provides wrapper classes for integrating stable baselines3 policy algorithms.
 
@@ -194,10 +195,29 @@ class WrPolicySB32MLPro (Wrapper, Policy):
         if len(self.get_action_space().get_dim(id_dim).get_boundaries()) == 1:
             action_space = gym.spaces.Discrete(self.get_action_space().get_dim(id_dim).get_boundaries()[0])
         elif base_set == 'Z' or base_set == 'N':
-            low_limit = self.get_action_space().get_dim(id_dim).get_boundaries()[0]
-            up_limit = self.get_action_space().get_dim(id_dim).get_boundaries()[1]
-            num_discrete = int(up_limit-low_limit+1)
-            action_space = gym.spaces.Discrete(num_discrete)
+            if action_dim == 1:
+                low_limit = self.get_action_space().get_dim(id_dim).get_boundaries()[0]
+                up_limit = self.get_action_space().get_dim(id_dim).get_boundaries()[1]
+                if low_limit != 0:
+                    raise ParamError("Gym discrete spaces has a fixed range that always start with 0, "\
+                                     "please assure in your environment that all discrete spaces are set "\
+                                         "with min boundary is of 0. Afterwards, you can readjust the related "\
+                                             "actions in the _simulate_reaction().")
+                num_discrete = int(up_limit+1)
+                action_space = gym.spaces.Discrete(num_discrete)
+            else:     
+                act_space = []
+                for dimension in range(action_dim):
+                    ids = self.get_action_space().get_dim_ids()[dimension]
+                    low_limit = self.get_action_space().get_dim(ids).get_boundaries()[0]
+                    up_limit = self.get_action_space().get_dim(ids).get_boundaries()[1]
+                    if low_limit != 0:
+                        raise ParamError("Gym discrete spaces has a fixed range that always start with 0, "\
+                                         "please assure in your environment that all discrete spaces are set "\
+                                             "with min boundary is of 0. Afterwards, you can readjust the related "\
+                                                 "actions in the _simulate_reaction().")
+                    act_space.append(int(up_limit+1))
+                action_space = gym.spaces.MultiDiscrete(act_space)        
         else:
             self.lows = []
             self.highs = []
@@ -205,7 +225,6 @@ class WrPolicySB32MLPro (Wrapper, Policy):
                 id_dim = self.get_action_space().get_dim_ids()[dimension]
                 self.lows.append(self.get_action_space().get_dim(id_dim).get_boundaries()[0])
                 self.highs.append(self.get_action_space().get_dim(id_dim).get_boundaries()[1])
-
             action_space = gym.spaces.Box(
                 low=np.array(self.lows, dtype=np.float32),
                 high=np.array(self.highs, dtype=np.float32),
@@ -220,10 +239,29 @@ class WrPolicySB32MLPro (Wrapper, Policy):
         if len(self.get_observation_space().get_dim(id_dim).get_boundaries()) == 1:
             observation_space = gym.spaces.Discrete(self.get_observation_space().get_dim(id_dim).get_boundaries()[0])
         elif base_set == 'Z' or base_set == 'N':
-            low_limit = self.get_observation_space().get_dim(id_dim).get_boundaries()[0]
-            up_limit = self.get_observation_space().get_dim(id_dim).get_boundaries()[1]
-            num_discrete = int(up_limit-low_limit+1)
-            observation_space = gym.spaces.Discrete(num_discrete)
+            if observation_dim == 1:
+                low_limit = self.get_observation_space().get_dim(id_dim).get_boundaries()[0]
+                up_limit = self.get_observation_space().get_dim(id_dim).get_boundaries()[1]
+                if low_limit != 0:
+                    raise ParamError("Gym discrete spaces has a fixed range that always start with 0, "\
+                                     "please assure in your environment that all discrete spaces are set "\
+                                         "with min boundary is of 0. Afterwards, you can readjust the related "\
+                                             "actions/states in the _simulate_reaction()")
+                num_discrete = int(up_limit+1)
+                observation_space = gym.spaces.Discrete(num_discrete)
+            else:     
+                obs_space = []
+                for dimension in range(observation_dim):
+                    ids = self.get_observation_space().get_dim_ids()[dimension]
+                    low_limit = self.get_observation_space().get_dim(ids).get_boundaries()[0]
+                    up_limit = self.get_observation_space().get_dim(ids).get_boundaries()[1]
+                    if low_limit != 0:
+                        raise ParamError("Gym discrete spaces has a fixed range that always start with 0, "\
+                                         "please assure in your environment that all discrete spaces are set "\
+                                             "with min boundary is of 0. Afterwards, you can readjust the related "\
+                                                 "actions/states in the _simulate_reaction()")
+                    obs_space.append(int(up_limit+1))
+                observation_space = gym.spaces.MultiDiscrete(obs_space)
         else:
             lows = []
             highs = []
@@ -231,7 +269,6 @@ class WrPolicySB32MLPro (Wrapper, Policy):
                 id_dim = self.get_observation_space().get_dim_ids()[dimension]
                 lows.append(self.get_observation_space().get_dim(id_dim).get_boundaries()[0])
                 highs.append(self.get_observation_space().get_dim(id_dim).get_boundaries()[1])
-
             observation_space = gym.spaces.Box(
                 low=np.array(lows, dtype=np.float32),
                 high=np.array(highs, dtype=np.float32),
@@ -321,7 +358,10 @@ class WrPolicySB32MLPro (Wrapper, Policy):
 
             with torch.no_grad():
                 if not self._action_masking:
-                    actions, values, log_probs = self.sb3.policy.forward(obs)
+                    try:
+                        actions, values, log_probs = self.sb3.policy.forward(obs)
+                    except:
+                        actions, values, log_probs = self.sb3.policy.forward(obs[0])
                 else:
                     actions, values, log_probs = self.sb3.policy.forward(obs, action_masks=act_masks)
 
