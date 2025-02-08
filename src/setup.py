@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='mlpro-int-sb3',
-version='1.0.4',
+version='1.0.5',
 description='MLPro: Integration StableBaselines3',
 author='MLPro Team',
 author_mail='mlpro@listen.fh-swf.de',
