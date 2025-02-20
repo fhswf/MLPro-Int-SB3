@@ -129,7 +129,6 @@ class VecExtractDictObs(VecEnvWrapper):
 class WrPolicySB32MLPro (Wrapper, Policy):
     """
     This class provides a policy wrapper from Standard Baselines 3 (SB3).
-    Especially On-Policy Algorithm
 
     Parameters
     ----------
