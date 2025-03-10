@@ -17,6 +17,6 @@ Welcome to MLPro-Int-SB3, an extension to MLPro to integrate the Stable-Baseline
 MLPro-Int-SB3 offers wrapper classes that allow the reuse of environments from Stable-Baselines3 in MLPro, or the other way around.
 
 ### Learn more
-[MLPro - Machine Learning Professional](https://mlpro.readthedocs.io)   
+[MLPro - The integrative middleware framework for standardized machine learning in Python](https://mlpro.readthedocs.io)   
 [MLPro-Int-SB3 - Integration of Stable-Baselines3 into MLPro](https://mlpro-int-sb3.readthedocs.io)   
 [Stable-Baselines3 - Reliable Reinforcement Learning Implementations](https://stable-baselines3.readthedocs.io/en/master/) 
