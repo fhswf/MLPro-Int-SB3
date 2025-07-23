@@ -1,6 +1,6 @@
 mlpro_int_gymnasium[full]>=1.0.2
 mlpro_int_mujoco[full]>=1.0.1
-mlpro>=1.9.0
+mlpro>=2.1.0
 stable_baselines3>=2.3.0
 sb3-contrib>=2.2.1
 torch>=2.0.0
