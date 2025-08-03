@@ -20,10 +20,11 @@
 ## -- 2023-04-23  2.0.7     MRD      Temp commented testing
 ## -- 2023-08-21  2.0.8     MRD      Refactor for new gymnasium and sb3 wrapper, remove A2C test temp
 ## -- 2024-06-12  2.0.9     SY       Minor refactoring
+## -- 2025-08-03  2.0.10    SY       Refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 2.0.9 (2024-06-12)
+Ver. 2.0.10 (2025-08-03)
 
 Unit test classes for environment.
 """
@@ -34,6 +35,7 @@ import pytest
 import gymnasium as gym
 import torch
 from mlpro.rl import *
+from mlpro.bf import Log
 from mlpro_int_gymnasium.wrappers import WrEnvGYM2MLPro, WrEnvMLPro2GYM
 from mlpro.rl.pool.envs.robotinhtm import RobotHTM
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
