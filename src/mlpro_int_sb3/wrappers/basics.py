@@ -32,10 +32,11 @@
 ## -- 2024-04-19  1.4.0     DA       Alignment with MLPro 1.4.0
 ## -- 2024-10-24  1.4.1     SY       Update: _compute_action_on_policy() for Maskable PPO
 ## -- 2025-02-27  1.4.2     SY       Enabling MultiDiscrete in state and action spaces, refactoring
+## -- 2025-08-03  1.4.3     SY       Refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.4.2 (2025-02-27)
+Ver. 1.4.3 (2025-08-03)
 
 This module provides wrapper classes for integrating stable baselines3 policy algorithms.
 
@@ -58,6 +59,12 @@ from mlpro.rl import *
 from typing import Any, Dict, Optional, Union
 from sb3_contrib import MaskablePPO
 
+# Export list for public API
+__all__ = [
+    'DummyEnv',
+    'VecExtractDictObs',
+    'WrPolicySB32MLPro'
+    ]
 
 
 ## -------------------------------------------------------------------------------------------------
