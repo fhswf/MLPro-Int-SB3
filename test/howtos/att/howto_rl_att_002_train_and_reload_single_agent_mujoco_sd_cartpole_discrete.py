@@ -42,6 +42,7 @@ from mlpro.bf.ml import *
 from mlpro_int_sb3.wrappers import WrPolicySB32MLPro
 from mlpro_int_mujoco.envs.cartpole import CartpoleMujocoDiscrete
 from pathlib import Path
+import os
 
 
 class MyScenario(RLScenario):
