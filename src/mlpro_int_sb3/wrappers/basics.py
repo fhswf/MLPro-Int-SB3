@@ -32,11 +32,11 @@
 ## -- 2024-04-19  1.4.0     DA       Alignment with MLPro 1.4.0
 ## -- 2024-10-24  1.4.1     SY       Update: _compute_action_on_policy() for Maskable PPO
 ## -- 2025-02-27  1.4.2     SY       Enabling MultiDiscrete in state and action spaces, refactoring
-## -- 2025-08-03  1.4.3     SY       Refactoring
+## -- 2025-08-21  1.4.3     SY       Refactoring
 ## -------------------------------------------------------------------------------------------------
 
 """
-Ver. 1.4.3 (2025-08-03)
+Ver. 1.4.3 (2025-08-21)
 
 This module provides wrapper classes for integrating stable baselines3 policy algorithms.
 
@@ -56,6 +56,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3 import HerReplayBuffer
 from collections import OrderedDict
 from mlpro.rl import *
+from mlpro.bf import *
 from typing import Any, Dict, Optional, Union
 from sb3_contrib import MaskablePPO
 
@@ -592,3 +593,4 @@ class WrPolicySB32MLPro (Wrapper, Policy):
     def _add_additional_buffer(self, p_buffer_element: SARSElement):
         p_buffer_element.add_value_element(self.additional_buffer_element)
         return p_buffer_element
+
