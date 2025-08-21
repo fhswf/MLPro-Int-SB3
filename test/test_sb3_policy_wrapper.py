@@ -34,6 +34,7 @@ from numpy import empty
 import pytest
 import gymnasium as gym
 import torch
+import numpy as np
 from mlpro.rl import *
 from mlpro.bf import *
 from mlpro.bf.math import *
