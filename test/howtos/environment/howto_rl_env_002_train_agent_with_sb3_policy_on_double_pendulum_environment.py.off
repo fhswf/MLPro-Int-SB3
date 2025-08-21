@@ -34,8 +34,12 @@ You will learn:
 
 
 import torch
+from mlpro.bf import *
 from mlpro.bf.math import *
-from mlpro.rl.models import *
+from mlpro.bf.systems import *
+from mlpro.bf.plot import *
+from mlpro.bf.ml import *
+from mlpro.rl import *
 from mlpro.rl.pool.envs.doublependulum import *
 from stable_baselines3 import A2C
 from stable_baselines3 import DDPG
