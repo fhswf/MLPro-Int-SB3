@@ -17,7 +17,7 @@ extras_require={
         "mlpro>=2.1.0",
         "stable_baselines3>=2.3.0",
         "sb3-contrib>=2.2.1",
-        "torch>=2.0.0,<=2.3.1",
+        "torch>=2.0.0",
         "numpy>=1.0.0",
         "setuptools >= 75.0.0"
     ],
